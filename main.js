@@ -1,5 +1,5 @@
-import * as THREE from 'https://cdn.skypack.dev/pin/three@v0.131.3-QQa34rwf1xM5cawaQLl8/mode=imports/optimized/three.js';
-import * as TWEEN from 'https://cdn.skypack.dev/pin/tween@v0.9.0-tBEutCs6Kk1PFQa2otqC/mode=imports/optimized/tween.js';
+import * as THREE from 'https://cdn.skypack.dev/three';
+import * as TWEEN from 'https://cdn.skypack.dev/tween';
 
 const container = document.querySelector('#container');
 const pages = document.getElementsByClassName('page');
