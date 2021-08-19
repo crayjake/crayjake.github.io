@@ -4,17 +4,19 @@ import * as TWEEN from 'https://cdn.skypack.dev/tween';
 const container = document.querySelector('#container');
 const pages = document.getElementsByClassName('page');
 
+var loading = true;
+
 const mazePosition = { x: 0, y: 0 }
 const maze2D =
-  [['.', '.', '.', '.', '.', '.', '.','.','.'],
-   ['.', '_', ' ', '.', '.', ' ', '2',' ','.'],
-   ['.', ' ', ' ', '.', ' ', ' ', '.',' ','.'],
-   ['.', ' ', ' ', '.', ' ', '.', '.',' ','.'],
-   ['.', ' ', '.', '.', ' ', '.', '.',' ','.'],
-   ['.', '1', ' ', '.', ' ', ' ', ' ','3','.'],
-   ['.', '.', ' ', ' ', ' ', '.', '.',' ','.'],
-   ['.', '0', ' ', '.', ' ', ' ', ' ',' ','.'],
-   ['.', '.', '.', '.', '.', '.', '.','.','.']]
+  [['.', '.', '.', '.', '.', '.', '.', '.', '.'],
+  ['.', '_', '0', '.', '.', ' ', '2', ' ', '.'],
+  ['.', ' ', ' ', ' ', ' ', ' ', '.', ' ', '.'],
+  ['.', ' ', '.', '.', ' ', '.', '0', ' ', '.'],
+  ['.', ' ', '.', '.', ' ', '.', '.', ' ', '.'],
+  ['.', '1', ' ', '.', ' ', ' ', ' ', '3', '.'],
+  ['.', '.', ' ', ' ', ' ', '.', '.', ' ', '.'],
+  ['.', '0', ' ', '.', ' ', ' ', ' ', ' ', '.'],
+  ['.', '.', '.', '.', '.', '.', '.', '.', '.']]
 const movementDictionary =
 {
   'w': { x: 0, y: 1 },
@@ -30,7 +32,7 @@ for (var x = 0; x < pages.length; x++) {
 }
 
 function onKeyDown(event) {
-  if (!tweening) {
+  if (!tweening && !loading) {
     move(event.key);
   }
 }
@@ -52,22 +54,23 @@ camera.position.setZ(100);
 
 renderer.render(scene, camera);
 
-const pointLight = new THREE.PointLight(0xffffff);
-pointLight.position.set(0, 0, 100);
-const ambientLight = new THREE.AmbientLight(0xffffff);
-scene.add(pointLight, ambientLight);
+const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+directionalLight.position.set(0, 0, 100);
+scene.add(directionalLight);
 
-var padding = 1.5;
+var padding = 5;
 var numOfItems = 9;
 var itemWidth = (canvasSize - ((1 + numOfItems) * padding)) / numOfItems;
 
-const bg = new THREE.Mesh(new THREE.BoxGeometry(canvasSize, canvasSize, 0.1, 1, 1, 1), new THREE.MeshStandardMaterial({ color: 0xeb4034 }));
+const bg = new THREE.Mesh(new THREE.BoxGeometry(canvasSize, canvasSize, 0.1, 1, 1, 1), new THREE.MeshStandardMaterial({ color: 0x84cdca }));
 scene.add(bg)
 
 var center;
 for (var x = 0; x < numOfItems; x++) {
   for (var y = 0; y < numOfItems; y++) {
-    const dice = new THREE.Mesh(new THREE.BoxGeometry(itemWidth, itemWidth, itemWidth, 1, 1, 1), new THREE.MeshStandardMaterial({ color: 0x9300FF }));
+    var w = itemWidth;
+    if (maze2D[(numOfItems - 1) - y][x] == '.') { w += padding; }
+    const dice = new THREE.Mesh(new THREE.BoxGeometry(w, w, w, 1, 1, 1), new THREE.MeshStandardMaterial({ color: 0xE8A87C }));
     //odd numbers then middle is floor(numOfItems/2)
     dice.position.x = (x - Math.floor(numOfItems / 2)) * (itemWidth + padding);
     dice.position.y = (y - Math.floor(numOfItems / 2)) * (itemWidth + padding);
@@ -76,7 +79,7 @@ for (var x = 0; x < numOfItems; x++) {
     if (maze2D[(numOfItems - 1) - y][x] == '_') {
       mazePosition.x = x - Math.floor(numOfItems / 2);
       mazePosition.y = y - Math.floor(numOfItems / 2);
-      dice.material.color.setHex(0x0f4efc);
+      dice.material.color.setHex(0x40B3A2);
       center = dice;
       scene.add(dice);
     }
@@ -86,14 +89,12 @@ for (var x = 0; x < numOfItems; x++) {
     }
     if (maze2D[(numOfItems - 1) - y][x] >= '0' && maze2D[(numOfItems - 1) - y][x] <= '9') {
       // it is a number
-      if(maze2D[(numOfItems - 1) - y][x] == 0)
-      {
-        dice.material.color.setHex(0xffffff);
-      } else 
-      {
+      if (maze2D[(numOfItems - 1) - y][x] == 0) {
+        dice.material.color.setHex(0x3a3a3a);
+      } else {
         const texture = new THREE.TextureLoader().load('images/' + maze2D[(numOfItems - 1) - y][x] + '.png');
         dice.material.map = texture;
-        dice.material.color.setHex(0x0ffc36);
+        dice.material.color.setHex(0xC38D9D);
       }
       dice.position.z = 0;
       scene.add(dice);
@@ -120,7 +121,7 @@ function move(key) {
 
   var rotation = { x: center.rotation.x, y: center.rotation.y, posX: center.position.x, posY: center.position.y };
   var target = { x: center.rotation.x + (-direction.y * Math.PI / 2), y: center.rotation.y + (direction.x * Math.PI / 2), posX: center.position.x + (direction.x * (itemWidth + padding)), posY: center.position.y + (direction.y * (itemWidth + padding)) };
-  tween = new TWEEN.Tween(rotation).to(target, 200);
+  tween = new TWEEN.Tween(rotation).to(target, 120);
   tween.onUpdate(function () {
     center.rotation.x = rotation.x;
     center.rotation.y = rotation.y;
@@ -144,24 +145,26 @@ function loadPage(page) {
     for (var x = 0; x < pages.length; x++) {
       pages[x].setAttribute('hidden', '');
     }
-    if(page == '0' && !fullscreen)
-    {
+
+    if (page == '0' && !fullscreen) {
       console.log('GROWWWW!!!')
       canvasTween = resizeCanvas(true);
       canvasTween.start();
       fullscreen = true;
-      
+
       return;
     }
 
 
-    if (fullscreen) {
+    if (fullscreen && page !== '0') {
       canvasTween = resizeCanvas(!fullscreen);
       canvasTween.start();
       fullscreen = false;
     }
 
-    pages[page - 1].removeAttribute('hidden');
+    if (page !== '0') {
+      pages[page - 1].removeAttribute('hidden');
+    }
   } else {
     // it isn't
   }
@@ -178,15 +181,15 @@ function resizeCanvas(grow) {
   var size;
   var finalSize;
 
-  if(grow) {
+  if (grow) {
     finalSize = { size: canvasSize * 4, t: 1 };
     size = { size: canvasSize, t: 0 };
   } else {
     size = { size: canvasSize * 4, t: 1 };
     finalSize = { size: canvasSize, t: 0 };
   }
-  
-  var canvasTween = new TWEEN.Tween(size).to(finalSize, 1000);
+
+  var canvasTween = new TWEEN.Tween(size).to(finalSize, 750);
   canvasTween.easing(TWEEN.Easing.Cubic.InOut);
 
   canvasTween.onUpdate(function () {
@@ -197,6 +200,22 @@ function resizeCanvas(grow) {
 
   return canvasTween;
 }
+
+var playerRotation = { x: 0, y: 0 }
+var targetRotation = { x: Math.PI, y: Math.PI }
+var loadingTween = new TWEEN.Tween(playerRotation).to(targetRotation, 1500);
+loadingTween.onUpdate(function () {
+  center.rotation.x = playerRotation.x;
+  center.rotation.y = playerRotation.y;
+});
+
+loadingTween.onComplete(function () {
+  center.rotation.x = 0;
+  center.rotation.y = 0;
+  loading = false;
+});
+
+loadingTween.start();
 
 function animate() {
   requestAnimationFrame(animate);
