@@ -1,5 +1,3 @@
-import './style.css'
-
 import * as THREE from 'https://cdn.skypack.dev/pin/three@v0.131.3-QQa34rwf1xM5cawaQLl8/mode=imports/optimized/three.js';
 import * as TWEEN from 'https://cdn.skypack.dev/pin/tween@v0.9.0-tBEutCs6Kk1PFQa2otqC/mode=imports/optimized/tween.js';
 
@@ -37,11 +35,9 @@ function onKeyDown(event) {
   }
 }
 
-
 const scene = new THREE.Scene();
 
 var canvasSize = (window.innerHeight - 20) / 4;
-
 
 //const camera = new THREE.PerspectiveCamera(75, window.innerHeight / window.innerHeight, 0.1, 1000);
 const camera = new THREE.OrthographicCamera(-canvasSize / 2, canvasSize / 2, canvasSize / 2, -canvasSize / 2)
@@ -61,7 +57,7 @@ pointLight.position.set(0, 0, 100);
 const ambientLight = new THREE.AmbientLight(0xffffff);
 scene.add(pointLight, ambientLight);
 
-var padding = 2;
+var padding = 1.5;
 var numOfItems = 9;
 var itemWidth = (canvasSize - ((1 + numOfItems) * padding)) / numOfItems;
 
@@ -77,7 +73,6 @@ for (var x = 0; x < numOfItems; x++) {
     dice.position.y = (y - Math.floor(numOfItems / 2)) * (itemWidth + padding);
     dice.position.z = itemWidth;
 
-    console.log('test_center', (x - Math.floor(numOfItems / 2)), (y - Math.floor(numOfItems / 2)))
     if (maze2D[(numOfItems - 1) - y][x] == '_') {
       mazePosition.x = x - Math.floor(numOfItems / 2);
       mazePosition.y = y - Math.floor(numOfItems / 2);
