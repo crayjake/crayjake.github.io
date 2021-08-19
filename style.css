@@ -1,10 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;800&display=swap');
 body {
-  height:100vh;
-  width:100%;
-  margin:0;
-  background-image: url(images/wasd.jpg);
-  background-repeat: repeat;
-  background-size:10%;
+  height: 100vh;
+  width: 100%;
+  margin: 0;
+  background-color: #3a3a3a;
   overflow: hidden;
 }
 
@@ -12,22 +11,51 @@ body {
   position: absolute;
   width: 50%;
   height: 50%;
-  right:10px;
-  top:10px;
+  right: 10px;
+  top: 10px;
+  z-index: 1;
+}
+
+#webgl > canvas {
+  border-radius: 5px;
+}
+
+#container {
+  height: 100vh;
 }
 
 .page {
-  font-family: monospace;
+  width: 40vw;
+  height: 60vh;
+  margin: auto;
   position: absolute;
-  left: 50%;
-  z-index: -1;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  font-family: "Montserrat", sans-serif;
+  color: #3a3a3a;
 }
 
-.page>div {
-  position: relative;
-  left: -50%;
-  width: 60vw;
-  height: 100vh;
+.page > div {
   padding: 20px;
-  background-color: white;
+  background-color: #C38D9D;
+  margin:10px;
+  border-radius: 20px;
+}
+
+#content {
+  background-color: #40B3A2;
+}
+
+#content>h3 {
+  font-weight: 300;
+  margin:0;
+}
+
+#title {
+  margin: auto;
+  width:20vw;
+  font-weight: 800;
+  text-align: center;
 }
