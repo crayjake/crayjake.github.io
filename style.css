@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap');
 body {
     margin: 0;
     height: 100vh;
@@ -50,6 +51,19 @@ h2,
 h3,
 h4 {
     margin: 0;
+}
+
+h3 {
+    font-family: 'Roboto Mono', monospace;
+    margin-top: 1rem;
+}
+
+.page h1 {
+    font-size: 2rem;
+}
+
+.page a {
+    background-color: white;
 }
 
 .sidebar h1 {
