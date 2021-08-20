@@ -1,8 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap');
+html {
+    background-color: #3a3a3a;
+}
 body {
     margin: 0;
-    height: 100vh;
     font-family: 'Major Mono Display', monospace;
 }
 
@@ -16,9 +18,6 @@ main {
 /* Landscape phones and down */
 
 @media (max-width: 480px) {
-    body {
-        height: -webkit-fill-available !important;
-    }
     .content {
         width: 100% !important;
         flex-direction: column-reverse;
@@ -31,12 +30,12 @@ main {
         flex-direction: column;
     }
     .webgl {
-        width: min(60vw,60vh) !important;
-        height: min(60vw,60vh) !important;
+        width: min(50vw,50vh) !important;
+        height: min(50vw,50vh) !important;
     }
     .minimised {
-        width: min(60vw,60vh) !important;
-        height: min(60vw,60vh) !important;
+        width: min(50vw,50vh) !important;
+        height: min(50vw,50vh) !important;
     }
 }
 
@@ -116,12 +115,20 @@ h3 {
 
 .page-padding {
     flex: 1;
-    transition: flex 1s;
+    -webkit-transition: flex 1s ease;
+    -moz-transition: flex 1s ease;
+    -ms-transition: flex 1s ease;
+    -o-transition: flex 1s ease;
+    transition: flex 1s ease;
 }
 
 .webgl-padding {
     flex: 0;
-    transition: flex 1s;
+    -webkit-transition: flex 1s ease;
+    -moz-transition: flex 1s ease;
+    -ms-transition: flex 1s ease;
+    -o-transition: flex 1s ease;
+    transition: flex 1s ease;
 }
 
 .webgl-wrapper {
@@ -135,7 +142,11 @@ h3 {
 .webgl {
     width: min(80vw,80vh);
     height: min(80vw,80vh);
-    transition: 1s;
+    -webkit-transition: 1s ease;
+    -moz-transition: 1s ease;
+    -ms-transition: 1s ease;
+    -o-transition: 1s ease;
+    transition: 1s ease;
 }
 
 .minimised {
