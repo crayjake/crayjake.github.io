@@ -3,7 +3,6 @@
 body {
     margin: 0;
     height: 100vh;
-    height: -webkit-fill-available;
     font-family: 'Major Mono Display', monospace;
 }
 
@@ -17,6 +16,9 @@ main {
 /* Landscape phones and down */
 
 @media (max-width: 480px) {
+    body {
+        height: -webkit-fill-available !important;
+    }
     .content {
         width: 100% !important;
         flex-direction: column-reverse;
