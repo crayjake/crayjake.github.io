@@ -1,6 +1,8 @@
 import * as THREE from 'https://cdn.skypack.dev/three';
 import * as TWEEN from 'https://cdn.skypack.dev/tween';
 
+document.querySelector('body').setAttribute("style", "height:"+window.innerHeight+"px");
+
 //#region Constant Variables
 const mazePosition = { x: 0, y: 0 }
 const maze2D =
