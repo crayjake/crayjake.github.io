@@ -331,6 +331,7 @@ function resizeCanvas(grow) {
         renderer.setSize(size.size, size.size);
         var right = ((1 - size.t) * 10) + (size.t * (window.innerWidth - size.size) / 2);
         document.getElementById("webgl").style.right = right.toString() + "px";
+        document.getElementById("webgl").style.top = (10 + (10*(1-size.t))).toString() + "px";
     });
 
     return canvasTween;
