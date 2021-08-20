@@ -3,6 +3,7 @@
 body {
     margin: 0;
     height: 100vh;
+    height: -webkit-fill-available;
     font-family: 'Major Mono Display', monospace;
 }
 
