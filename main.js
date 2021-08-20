@@ -26,7 +26,7 @@ const container = document.getElementById('container');
 const pages = document.getElementsByClassName('page');
 
 const canvasSize = (Math.min(window.innerWidth, window.innerHeight) - 20) / 4;
-const padding = 5;
+const padding = 2;
 const numOfItems = 9;
 const itemWidth = (canvasSize - ((1 + numOfItems) * padding)) / numOfItems;
 //#endregion
@@ -127,18 +127,21 @@ function handleTouchMove(evt) {
 let canvasTween = resizeCanvas(false);
 function initGame() {
     const bg = new THREE.Mesh(new THREE.BoxGeometry(canvasSize, canvasSize, 0.1, 1, 1, 1), new THREE.MeshStandardMaterial({ color: 0x84cdca }));
+    bg.position.z = -1;
     scene.add(bg)
 
     let player;
     for (var x = 0; x < numOfItems; x++) {
         for (var y = 0; y < numOfItems; y++) {
             var w = itemWidth;
-            if (maze2D[(numOfItems - 1) - y][x] == '.') { w += padding; }
-            const cube = new THREE.Mesh(new THREE.BoxGeometry(w, w, w, 1, 1, 1), new THREE.MeshStandardMaterial({ color: 0xE8A87C }));
+            var h = itemWidth;
+            var z = itemWidth;
+            if (maze2D[(numOfItems - 1) - y][x] == '.') { w += padding; h=0.1; z=-0.1}
+            const cube = new THREE.Mesh(new THREE.BoxGeometry(w, w, h), new THREE.MeshStandardMaterial({ color: 0xE8A87C }));
             //odd numbers then middle is floor(numOfItems/2)
             cube.translateX((x - Math.floor(numOfItems / 2)) * (itemWidth + padding));
             cube.translateY((y - Math.floor(numOfItems / 2)) * (itemWidth + padding));
-            cube.translateZ(itemWidth);
+            cube.translateZ(z);
 
             if (maze2D[(numOfItems - 1) - y][x] == '_') {
                 mazePosition.x = x - Math.floor(numOfItems / 2);
