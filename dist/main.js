@@ -1,7 +1,6 @@
 import * as THREE from 'https://cdn.skypack.dev/three';
 import * as TWEEN from 'https://cdn.skypack.dev/tween';
 
-
 //#region Constant Variables
 const mazePosition = { x: 0, y: 0 }
 const maze2D =
@@ -22,8 +21,8 @@ const movementDictionary =
     'd': { x: 1, y: 0 },
 }
 
-const container = document.getElementById('container');
-const pages = document.getElementsByClassName('page');
+var pages = document.getElementsByClassName('page');
+var currentPage = -1;
 
 const canvasSize = (Math.min(window.innerWidth, window.innerHeight) - 20) / 3;
 const padding = 2;
@@ -53,17 +52,16 @@ function initTHREE() {
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(canvasSize, canvasSize);
     //add renderer to webgl DOM
-    document.querySelector('#webgl').appendChild(renderer.domElement);
+    document.querySelector('.webgl').appendChild(renderer.domElement);
     //set the DOMs width and height
-    document.getElementById("webgl").style.width = "auto";
-    document.getElementById("webgl").style.height = "auto";
+    //document.querySelector('.webgl').style.width = "auto";
+    //document.querySelector('.webgl').style.height = "auto";
     //move the camera so it can view the scene
     camera.translateZ(100);
 
     //zoom canvas
     renderer.setSize(canvasSize * 3, canvasSize * 3);
     var right = ((window.innerWidth - canvasSize * 3) / 2);
-    document.getElementById("webgl").style.right = right.toString() + "px";
 
     //add directionalLight
     const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
@@ -124,7 +122,6 @@ function handleTouchMove(evt) {
 //#endregion
 
 //initialises the game
-let canvasTween = resizeCanvas(false);
 function initGame() {
     const bg = new THREE.Mesh(new THREE.BoxGeometry(canvasSize, canvasSize, 0.1, 1, 1, 1), new THREE.MeshStandardMaterial({ color: 0x84cdca }));
     bg.position.z = -1;
@@ -220,37 +217,38 @@ function whichTransitionEvent() {
     }
 }
 
-var transitioning = 'none';
-var awaitingPage = 0;
+var state = 'closed';
 var transitionEnd = whichTransitionEvent();
-document.querySelector('.title').addEventListener(transitionEnd, theFunctionToInvoke, false);
+document.querySelector('.page-padding').addEventListener(transitionEnd, theFunctionToInvoke, false);
 
 function theFunctionToInvoke() {
-    if (transitioning == 'hiding') {
-        for (var x = 0; x < pages.length; x++) {
-            pages[x].setAttribute('hidden', '');
+    // set margin of div here
+    if (state == 'closing') {
+        pages[currentPage].setAttribute('hidden', '');
+        state = 'closed';
+
+        var els = document.getElementsByClassName('webgl-padding');
+        for (var i = 0; i < els.length; i++) {
+            els[i].style.flex = '0';
+            els[i].style.padding = '0';
+        }
+        document.querySelector('.webgl').classList.remove('minimised');
+
+        currentPage = -1;
+    }
+    if (state == 'newPage') {
+        state = 'opening';
+
+        for (var i = 0; i < pages.length; i++) {
+            pages[i].setAttribute('hidden', '');
         }
 
-        if (awaitingPage == '0' && !fullscreen) {
-            fullscreen = true;
-            transitioning = 'none';
-            document.querySelector('.title').classList.add('show');
-            document.querySelector('.anim').classList.add('show');
-            return;
-        }
-
-
-        if (fullscreen && awaitingPage !== '0') {
-            fullscreen = false;
-        }
-
-        if (awaitingPage !== '0') {
-            transitioning = 'showing';
-            pages[awaitingPage - 1].removeAttribute('hidden');
-            document.querySelector('.title').classList.add('show');
-            document.querySelector('.anim').classList.add('show');
-        }
-    } else if (transitioning == 'showing') {transitioning = 'none';}
+        pages[currentPage].removeAttribute('hidden');
+        document.querySelector('.page-padding').style.flex = '0';
+    }
+    if (state == 'opening') {
+        state = 'opened';
+    }
 }
 
 function move(key) {
@@ -258,7 +256,6 @@ function move(key) {
     var newX = mazePosition.x + direction.x;
     var newY = mazePosition.y + direction.y;
 
-    console.log((-newY) + Math.floor(numOfItems / 2), newX + Math.floor(numOfItems / 2), maze2D[(-newY) + Math.floor(numOfItems / 2)][newX + Math.floor(numOfItems / 2)])
     if (maze2D[(-newY) + Math.floor(numOfItems / 2)][newX + Math.floor(numOfItems / 2)] == '.') { return; }
 
     mazePosition.x = newX;
@@ -286,55 +283,50 @@ function move(key) {
     playerMoving = true;
 }
 
-function loadPage(page) {
-    if(page == awaitingPage) {return;}
-    if (page >= '0' && page <= '9' && transitioning == 'none') {
-        // it is a number
-        console.log("LOAD PAGE");
-        document.querySelector('.title').classList.remove('show');
-        document.querySelector('.anim').classList.remove('show');
-        transitioning = 'hiding';
-        awaitingPage = page;
+function loadPage(p) {
+    if(state.includes('ing')) {return;}
 
-        if (awaitingPage == '0' && !fullscreen) {
-            canvasTween = resizeCanvas(true);
-            canvasTween.start();
+    if (p == '0') { closePage(); return; }
+    let page = p - 1;
+
+    if (page == currentPage) { return; }
+
+    if (page >= '0' && page <= '9') {
+
+        if (page == currentPage) { return; }
+        if (state == 'closed') {
+            var els = document.getElementsByClassName('webgl-padding');
+            for (var i = 0; i < els.length; i++) {
+                els[i].style.flex = '1';
+                els[i].style.padding = '1 rem';
+            }
+            document.querySelector('.webgl').classList.add('minimised');
+
+            state = 'minimising';
+            currentPage = page;
             return;
         }
 
-
-        if (fullscreen && awaitingPage !== '0') {
-            canvasTween = resizeCanvas(!fullscreen);
-            canvasTween.start();
+        currentPage = page;
+        if (state == 'opened') {
+            state = 'newPage';
+            document.querySelector('.page-padding').style.flex = '1';
+            return;
         }
+
+        state = 'opening';
+
+        pages[page].removeAttribute('hidden');
+        document.querySelector('.page-padding').style.flex = '0';
     } else {
         // it isn't
     }
 }
 
-function resizeCanvas(grow) {
-    var size;
-    var finalSize;
-
-    if (grow) {
-        finalSize = { size: canvasSize * 3, t: 1 };
-        size = { size: canvasSize, t: 0 };
-    } else {
-        size = { size: canvasSize * 3, t: 1 };
-        finalSize = { size: canvasSize, t: 0 };
-    }
-
-    var canvasTween = new TWEEN.Tween(size).to(finalSize, 750);
-    canvasTween.easing(TWEEN.Easing.Cubic.InOut);
-
-    canvasTween.onUpdate(function () {
-        renderer.setSize(size.size, size.size);
-        var right = ((1 - size.t) * 10) + (size.t * (window.innerWidth - size.size) / 2);
-        document.getElementById("webgl").style.right = right.toString() + "px";
-        document.getElementById("webgl").style.top = (10 + (10*(1-size.t))).toString() + "px";
-    });
-
-    return canvasTween;
+function closePage() {
+    if(state == 'closed') {return;}
+    state = 'closing';
+    document.querySelector('.page-padding').style.flex = '1';
 }
 
 function animate() {
@@ -342,6 +334,18 @@ function animate() {
 
     //center.rotation.y += 0.01;
     //center.rotation.z += 0.01;
+    var size = document.querySelector('.webgl').offsetWidth;
+    var s = new THREE.Vector2();
+    renderer.getSize(s);
+    if (size != s.x) {
+        renderer.setSize(size, size);
+    } else if (state == 'minimising') {
+        var p = currentPage +1;
+        currentPage = -1;
+        state = 'minimised';
+        loadPage(p);
+    }
+
     TWEEN.update();
     renderer.render(scene, camera);
 }
@@ -350,3 +354,5 @@ function animate() {
 initTHREE();
 startGame();
 
+var size = document.querySelector('.webgl').offsetWidth;
+renderer.setSize(size, size);
