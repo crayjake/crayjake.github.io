@@ -30,12 +30,12 @@ main {
         flex-direction: column;
     }
     .webgl {
-        width: min(60vw,60vh) !important;
-        height: min(60vw,60vh) !important;
+        width: min(50vw,50vh) !important;
+        height: min(50vw,50vh) !important;
     }
     .minimised {
-        width: min(60vw,60vh) !important;
-        height: min(60vw,60vh) !important;
+        width: min(50vw,50vh) !important;
+        height: min(50vw,50vh) !important;
     }
 }
 
