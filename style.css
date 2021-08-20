@@ -2,11 +2,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap');
 html {
     background-color: #3a3a3a;
-    touch-action: none;
-    overscroll-behavior-y: none;
-
 }
 body {
+    overscroll-behavior-y: none;
     margin: 0;
     font-family: 'Major Mono Display', monospace;
 }
