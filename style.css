@@ -7,6 +7,10 @@ body {
   overflow: hidden;
 }
 
+[hidden]{
+  display:none !important;
+}
+
 #webgl {
   position: absolute;
   width: 50%;
@@ -25,12 +29,16 @@ body {
 }
 
 .page {
+  height: 100%;
   font-family: "Montserrat", sans-serif;
   color: #3a3a3a;
+  display:flex;
+  flex-flow: column;
 }
 
 .page > div {
-  padding: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
   color: #C38D9D;
   border-radius: 20px;
 }
@@ -40,6 +48,8 @@ body {
   color: #3a3a3a;
   margin-left:10px;
   margin-right:10px;
+  padding: 20px;
+  width:80%;
 }
 
 #content>h3 {
@@ -48,17 +58,18 @@ body {
 }
 
 #title {
-  width:20vw;
   font-weight: 800;
 }
 
 .anim {
   transition: 0.5s;
   transform: translateY(100vh);
+  height: 100%;
 }
 
 .title {
-  padding: 20px;
+  padding: 20px 20px 0 20px;
+  width:50vw;
   color: #C38D9D;
   font-weight: 800;
   font-size: 50px;
