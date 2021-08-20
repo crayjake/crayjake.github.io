@@ -25,7 +25,7 @@ const movementDictionary =
 const container = document.getElementById('container');
 const pages = document.getElementsByClassName('page');
 
-const canvasSize = (Math.min(window.innerWidth, window.innerHeight) - 20) / 4;
+const canvasSize = (Math.min(window.innerWidth, window.innerHeight) - 20) / 3;
 const padding = 2;
 const numOfItems = 9;
 const itemWidth = (canvasSize - ((1 + numOfItems) * padding)) / numOfItems;
@@ -61,8 +61,8 @@ function initTHREE() {
     camera.translateZ(100);
 
     //zoom canvas
-    renderer.setSize(canvasSize * 4, canvasSize * 4);
-    var right = ((window.innerWidth - canvasSize * 4) / 2);
+    renderer.setSize(canvasSize * 3, canvasSize * 3);
+    var right = ((window.innerWidth - canvasSize * 3) / 2);
     document.getElementById("webgl").style.right = right.toString() + "px";
 
     //add directionalLight
@@ -317,10 +317,10 @@ function resizeCanvas(grow) {
     var finalSize;
 
     if (grow) {
-        finalSize = { size: canvasSize * 4, t: 1 };
+        finalSize = { size: canvasSize * 3, t: 1 };
         size = { size: canvasSize, t: 0 };
     } else {
-        size = { size: canvasSize * 4, t: 1 };
+        size = { size: canvasSize * 3, t: 1 };
         finalSize = { size: canvasSize, t: 0 };
     }
 
