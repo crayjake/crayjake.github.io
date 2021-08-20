@@ -17,7 +17,7 @@ body {
 }
 
 #webgl > canvas {
-  border-radius: 5px;
+  border-radius: 2px;
 }
 
 #container {
