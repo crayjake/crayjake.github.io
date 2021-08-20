@@ -1,5 +1,5 @@
-import * as THREE from 'three';
-import * as TWEEN from '@tweenjs/tween.js';
+import * as THREE from 'https://cdn.skypack.dev/three';
+import * as TWEEN from 'https://cdn.skypack.dev/tween';
 
 
 //#region Constant Variables
