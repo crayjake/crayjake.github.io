@@ -2,51 +2,50 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" type="text/css" href="style.css">
-  <title>Portfolio</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/56a08f2458.js" crossorigin="anonymous"></script>    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
 </head>
 
 <body>
-  <div id="webgl"></div>
-  <div id="container">
-    <div class="anim show">
-      <div class="title show">Jake CRAY</div>
-      <div class="page" hidden>
-        <div id="title">
-          <h1>Welcome 😊</h1>
-        </div>
-        <div id="content">
-          <h3>
-            Hi my name is Jake. I am currently doing a masters in maths.
-          </h3>
-        </div>
-      </div>
-      <div class="page" hidden>
-        <div id="title">
-          <h1>About 🧠</h1>
-        </div>
-        <div id="content">
-          <h3>
-            This website has been written using THREE.js and TWEEN.js! It is my first time using these libraries.
-          </h3>
-        </div>
-      </div>
-      <div class="page" hidden>
-        <div id="title">
-          <h1>Contact 📧</h1>
-        </div>
-        <div id="content">
-          <h3>
-            My github is <a href="https://www.github.com/crayjake">crayjake</a> :)
-          </h3>
-        </div>
-      </div>
-    </div>
-  </div>
-  <script type="module" src="main.js"></script>
-</body>
+    <main>
+        <section class="sidebar">
+            <h1>JAke<br>CrAy</h1>
+            <div class="socials">
+                <h2>Socials</h2>
+                <div class="social-icons">
+                    <i class="fab fa-github"></i>
+                    <i class="fab fa-github"></i>
+                    <i class="fab fa-github"></i>
+                </div>
+            </div>
+        </section>
+        <section class="content">
+            <div class="pages webgl-padding">
+                <div class="page-padding">
 
+                </div>
+                <div class="page" hidden>
+                    <h1>Welcome!</h1>
+                </div>
+                <div class="page" hidden>
+                    <h1>Page 2...</h1>
+                </div>
+                <div class="page" hidden>
+                    <h1>HAHAHAA you found page 3</h1>
+                </div>
+            </div>
+            <div class="webgl-wrapper flex-center">
+                <div class="webgl">
+                </div>
+                <div class="webgl-padding">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="main.js"></script>
+</body>
 </html>
