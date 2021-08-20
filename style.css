@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap');
 * {
-    overscroll-behavior-y: none;
+        overscroll-behavior-y: none;
 }
 html {
     background-color: #3a3a3a;
@@ -153,6 +153,6 @@ h3 {
 }
 
 .minimised {
-    width: min(40vw,40vh);
-    height: min(40vw,40vh);
+    width: min(60vw,60vh);
+    height: min(60vw,60vh);
 }
