@@ -79,16 +79,13 @@ var xDown = null;
 var yDown = null;
 
 function getTouches(evt) {
-    return evt.touches ||             // browser API
-        evt.originalEvent.touches; // jQuery
+    return evt.touches; // jQuery
 }
 
 function handleTouchStart(evt) {
     const firstTouch = getTouches(evt)[0];
     xDown = firstTouch.clientX;
     yDown = firstTouch.clientY;
-
-    evt.preventDefault();
 };
 
 function handleTouchMove(evt) {
@@ -122,8 +119,6 @@ function handleTouchMove(evt) {
     /* reset values */
     xDown = null;
     yDown = null;
-
-    evt.preventDefault();
 };
 //#endregion
 
