@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap');
 body {
     margin: 0;
-    height: 100vh;
+    height: 100%;
     font-family: 'Major Mono Display', monospace;
 }
 
