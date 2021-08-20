@@ -25,27 +25,21 @@ body {
 }
 
 .page {
-  width: 40vw;
-  height: 60vh;
-  margin: auto;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
   font-family: "Montserrat", sans-serif;
   color: #3a3a3a;
 }
 
 .page > div {
   padding: 20px;
-  background-color: #C38D9D;
-  margin:10px;
+  color: #C38D9D;
   border-radius: 20px;
 }
 
 #content {
   background-color: #40B3A2;
+  color: #3a3a3a;
+  margin-left:10px;
+  margin-right:10px;
 }
 
 #content>h3 {
@@ -54,8 +48,31 @@ body {
 }
 
 #title {
-  margin: auto;
   width:20vw;
   font-weight: 800;
-  text-align: center;
+}
+
+.anim {
+  transition: 0.5s;
+  transform: translateY(100vh);
+}
+
+.title {
+  padding: 20px;
+  color: #C38D9D;
+  font-weight: 800;
+  font-size: 50px;
+  text-align: left;
+  font-family: "Montserrat", sans-serif;
+  transition: 0.5s;
+  transform: translateY(-100vh);
+}
+
+.author {
+  color: blue;
+}
+
+/* ANIMATE */
+.show {
+  transform: translateY(0);
 }
