@@ -348,3 +348,4 @@ function animate() {
 //Run the game
 initTHREE();
 startGame();
+
